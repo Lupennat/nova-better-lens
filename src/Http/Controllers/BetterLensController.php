@@ -3,8 +3,8 @@
 namespace Lupennat\BetterLens\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Laravel\Nova\Http\Resources\LensViewResource;
 use Lupennat\BetterLens\Http\Requests\BetterLensRequest;
+use Lupennat\BetterLens\Http\Resources\BetterLensViewResource;
 
 class BetterLensController extends Controller
 {
@@ -15,9 +15,7 @@ class BetterLensController extends Controller
      */
     public function show(BetterLensRequest $request)
     {
-        $res = LensViewResource::make()->toArray($request);
-
-        $res['per_page_options'] = $request->perPageOptions();
+        $res = BetterLensViewResource::make()->toArray($request);
 
         return response()->json($res);
     }
