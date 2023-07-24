@@ -44,10 +44,8 @@ trait WithLens
      */
     public function isShownOnDetail(NovaRequest $request, $resource): bool
     {
-        $lens = new $this->lensClass();
-
-        if (method_exists($lens, 'canBeShownByRelated')) {
-            return $lens->canBeShownByRelated($request->resource()::uriKey());
+        if (method_exists($this->lensClass, 'canBeShownByRelated')) {
+            return $this->lensClass::canBeShownByRelated($request->resource()::uriKey());
         }
 
         return parent::isShownOnDetail($request, $resource);

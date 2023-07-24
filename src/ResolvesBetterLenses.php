@@ -18,12 +18,12 @@ trait ResolvesBetterLenses
         return $lenses->filter(function ($lens) use ($request) {
             if ($request->path() === 'nova-api/' . static::uriKey() . '/lenses') {
                 if (method_exists($lens, 'canShowOnToolbar')) {
-                    return $lens->canShowOnToolbar();
+                    return $lens::canShowOnToolbar();
                 }
             }
 
             if (method_exists($lens, 'canBeShownByRelated')) {
-                return $lens->canBeShownByRelated($request->viaResource);
+                return $lens::canBeShownByRelated($request->viaResource);
             }
 
             return true;

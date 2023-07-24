@@ -6,9 +6,7 @@ use Laravel\Nova\Http\Requests\LensRequest;
 
 /**
  * @method static int        perPageViaRelationship()
- * @method static bool       showPaginationViaRelationship()
  * @method static array<int, int> perPageOptions()
- * @method static bool       hideFromToolbar()
  * @method static array<int, class-string<\Laravel\Nova\Resource>> withRelated()
  */
 trait BetterLens
@@ -28,13 +26,33 @@ trait BetterLens
     }
 
     /**
+     * Hide lens from resource toolbar.
+     *
+     * @return bool
+     */
+    public static function hideFromToolbar()
+    {
+        return false;
+    }
+
+    /**
      * Detect if lens can show on resource toolbar.
      *
      * @return bool
      */
-    public function canShowOnToolbar()
+    public static function canShowOnToolbar()
     {
-        return method_exists($this, 'hideFromToolbar') ? !$this::hideFromToolbar() : true;
+        return !static::hideFromToolbar();
+    }
+
+    /**
+     * Load lens only if viaResource request match resources.
+     *
+     * @return array<int, class-string<\Laravel\Nova\Resource>>
+     */
+    public static function withRelated()
+    {
+        return [];
     }
 
     /**
@@ -44,9 +62,9 @@ trait BetterLens
      *
      * @return bool
      */
-    public function canBeShownByRelated($resourceKey)
+    public static function canBeShownByRelated($resourceKey)
     {
-        $withRelated = method_exists($this, 'withRelated') ? $this::withRelated() : [];
+        $withRelated = static::withRelated();
 
         if (count($withRelated) === 0) {
             return true;

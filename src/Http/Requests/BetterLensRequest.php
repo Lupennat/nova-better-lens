@@ -105,4 +105,42 @@ class BetterLensRequest extends LensRequest
 
         return $perPageOptions;
     }
+
+     /**
+     * Get a new query builder for the underlying model.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function newQuery()
+    {
+        if (!$this->viaRelationship()) {
+            return $this->model()->newQuery();
+        }
+
+        abort_unless($this->newViaResource()->hasRelatableField($this, $this->viaRelationship), 409);
+
+        return forward_static_call([$this->viaResource(), 'newModel'])
+            ->newQueryWithoutScopes()->findOrFail(
+                $this->viaResourceId
+            )->{$this->viaRelationship}();
+    }
+
+    /**
+     * Get a new query builder for the underlying model.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function newQueryWithoutScopes()
+    {
+        if (!$this->viaRelationship()) {
+            return $this->model()->newQueryWithoutScopes();
+        }
+
+        abort_unless($this->newViaResource()->hasRelatableField($this, $this->viaRelationship), 409);
+
+        return forward_static_call([$this->viaResource(), 'newModel'])
+            ->newQueryWithoutScopes()->findOrFail(
+                $this->viaResourceId
+            )->{$this->viaRelationship}()->withoutGlobalScopes();
+    }
 }
