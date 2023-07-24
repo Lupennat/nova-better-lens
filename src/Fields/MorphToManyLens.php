@@ -9,7 +9,7 @@ use Laravel\Nova\Fields\MorphToMany;
  */
 class MorphToManyLens extends MorphToMany
 {
-    use WithBetterLens;
+    use WithLens;
 
     /**
      * The field's component.

@@ -9,7 +9,7 @@ use Laravel\Nova\Fields\BelongsToMany;
  */
 class BelongsToManyLens extends BelongsToMany
 {
-    use WithBetterLens;
+    use WithLens;
 
     /**
      * The field's component.

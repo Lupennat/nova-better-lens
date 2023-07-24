@@ -9,7 +9,7 @@ use Laravel\Nova\Fields\HasManyThrough;
  */
 class HasManyThroughLens extends HasManyThrough
 {
-    use WithBetterLens;
+    use WithLens;
 
     /**
      * The field's component.

@@ -9,7 +9,7 @@ use Laravel\Nova\Fields\HasMany;
  */
 class HasManyLens extends HasMany
 {
-    use WithBetterLens;
+    use WithLens;
 
     /**
      * The field's component.
