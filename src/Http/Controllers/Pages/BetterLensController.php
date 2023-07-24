@@ -5,11 +5,11 @@ namespace Lupennat\BetterLens\Http\Controllers\Pages;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Laravel\Nova\Http\Requests\LensRequest;
-use Laravel\Nova\Http\Resources\LensViewResource;
 use Laravel\Nova\Menu\Breadcrumb;
 use Laravel\Nova\Menu\Breadcrumbs;
 use Laravel\Nova\Nova;
 use Lupennat\BetterLens\Http\Requests\BetterLensRequest;
+use Lupennat\BetterLens\Http\Resources\BetterLensViewResource;
 
 class BetterLensController extends Controller
 {
@@ -20,7 +20,7 @@ class BetterLensController extends Controller
      */
     public function __invoke(BetterLensRequest $request)
     {
-        $lens = LensViewResource::make()->authorizedLensForRequest($request);
+        $lens = BetterLensViewResource::make()->authorizedLensForRequest($request);
 
         return Inertia::render('Nova.BetterLens', [
             'breadcrumbs' => $this->breadcrumbs($request),

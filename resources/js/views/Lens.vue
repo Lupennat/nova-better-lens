@@ -262,8 +262,6 @@
             Nova.$on('query-string-changed', searchParams => {
                 compiledSearchParams = searchParams.toString();
             });
-
-            if (this.actionCanceller !== null) this.actionCanceller();
         },
 
         beforeUnmount() {
