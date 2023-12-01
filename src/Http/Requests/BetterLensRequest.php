@@ -30,7 +30,7 @@ class BetterLensRequest extends LensRequest
             return transform((new $resource($model))->serializeForIndex(
                 $this, $lensResource->resolveFields($this)
             ), function ($payload) use ($model, $lensResource) {
-                $payload['resourceLinkParameters'] = method_exists($lensResource, 'resourceLinkParameters') ? $lensResource::resourceLinkParameters($model) : [];
+                $payload['resourceLinkParameters'] = method_exists($lensResource, 'resourceLinkParameters') ? $lensResource::resourceLinkParameters($model, $this) : [];
                 $payload['actions'] = collect(array_values($lensResource->actions($this)))
                     ->filter(function ($action) {
                         return $action->shownOnIndex() || $action->shownOnTableRow();
@@ -106,7 +106,7 @@ class BetterLensRequest extends LensRequest
         return $perPageOptions;
     }
 
-     /**
+    /**
      * Get a new query builder for the underlying model.
      *
      * @return \Illuminate\Database\Eloquent\Builder

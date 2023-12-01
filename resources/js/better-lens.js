@@ -1,4 +1,5 @@
 import LensPage from './pages/Lens';
+import LensView from './views/Lens';
 import HasManyLensField from './components/HasManyLensField';
 import HasManyThroughLensField from './components/HasManyThroughLensField';
 import BelongsToManyLensField from './components/BelongsToManyLensField';
@@ -8,6 +9,7 @@ import LensField from './components/LensField';
 Nova.inertia('Nova.BetterLens', LensPage);
 
 Nova.booting((app, store) => {
+    app.component('ResourceBetterLens', LensView);
     app.component('detail-has-many-lens-field', HasManyLensField);
     app.component('detail-has-many-through-lens-field', HasManyThroughLensField);
     app.component('detail-belongs-to-many-lens-field', BelongsToManyLensField);

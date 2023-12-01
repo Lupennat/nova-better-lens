@@ -8,6 +8,7 @@
     4. [Per Page](#per-page)
     5. [Decorate Collection](#decorate-collection)
     6. [Resource Link Parameters](#resource-link-parameters)
+    7. [Breadcrumbs](#breadcrumbs)
 5. [Many Fields](#many-fields)
 6. [Lens Field](#lens-field)
 
@@ -236,11 +237,27 @@ Better Lens provide the ability to define extra parameters for view and edit url
      *
      * @return array<string,string>
      */
-    public static function resourceLinkParameters($model)
+    public static function resourceLinkParameters($model, LensRequest $request)
     {
         return [
             'name' => $model->name
         ];
+    }
+```
+
+### Breadcrumbs
+
+Better Lens provide the ability to override default Breadcrumbs for Lens pages using method `breadcrumbs` (by Default Nova Lens page breadcrumbs are loaded).
+
+```php
+    /**
+     * Page Breadcrumbs.
+     *
+     * @return \Laravel\Nova\Menu\Breadcrumbs
+     */
+    public function breadcrumbs(LensRequest $request)
+    {
+        return Breadcrumbs::make([]);
     }
 ```
 

@@ -1,23 +1,20 @@
 <template>
-    <ResourceLens
+    <ResourceBetterLens
         :resourceName="resourceName"
         :lens="lens"
         :searchable="searchable"
         :shouldOverrideMeta="true"
         :is-authorized-to-create="false"
+        :via-resource="viaResource"
+        :via-resource-id="viaResourceId"
     />
 </template>
 
 <script>
     import { mapProps } from '@/mixins';
-    import ResourceLens from '../views/Lens';
 
     export default {
         name: 'Lens',
-
-        components: {
-            ResourceLens
-        },
 
         props: {
             lens: {
@@ -30,7 +27,7 @@
                 default: false
             },
 
-            ...mapProps(['resourceName'])
+            ...mapProps(['resourceName', 'viaResource', 'viaResourceId'])
         }
     };
 </script>

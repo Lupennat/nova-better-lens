@@ -31,7 +31,7 @@ class BetterLensServiceProvider extends ServiceProvider
         });
 
         Nova::serving(function (ServingNova $event) {
-            Nova::script('better-lens', __DIR__ . '/../dist/js/better-lens.js');
+            Nova::script('better-lens-v1', __DIR__ . '/../dist/js/better-lens.js');
         });
 
         Field::macro('lens', function ($lens) {

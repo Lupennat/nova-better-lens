@@ -23,10 +23,12 @@ class BetterLensController extends Controller
         $lens = BetterLensViewResource::make()->authorizedLensForRequest($request);
 
         return Inertia::render('Nova.BetterLens', [
-            'breadcrumbs' => $this->breadcrumbs($request),
+            'breadcrumbs' => method_exists($lens, 'breadcrumbs') ? $lens->breadcrumbs($request) : $this->breadcrumbs($request, $lens),
             'resourceName' => $request->route('resource'),
             'lens' => $lens->uriKey(),
             'searchable' => $lens::searchable(),
+            'viaResource' => $request->viaResource,
+            'viaResourceId' => $request->viaResourceId,
         ]);
     }
 

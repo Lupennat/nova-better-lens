@@ -1,5 +1,5 @@
 <template>
-    <ResourceLens
+    <ResourceBetterLens
         :field="field"
         :resource-name="field.resourceName"
         :via-resource="resourceName"
@@ -19,14 +19,10 @@
 </template>
 
 <script>
-    import ResourceLens from '../views/Lens';
-
     export default {
         emits: ['actionExecuted'],
 
-        components: { ResourceLens },
-
-        props: ['resourceName', 'resourceId', 'resource', 'field', 'lens'],
+        props: ['resourceName', 'resourceId', 'field'],
 
         methods: {
             /**

@@ -22,6 +22,10 @@ trait ResolvesBetterLenses
                 }
             }
 
+            if (str_ends_with($request->path(), '/cards')) {
+                return true;
+            }
+
             if (method_exists($lens, 'canBeShownByRelated')) {
                 return $lens::canBeShownByRelated($request->viaResource);
             }
