@@ -3,12 +3,13 @@
 namespace Lupennat\BetterLens;
 
 use Laravel\Nova\Http\Requests\LensRequest;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
- * @method static int        perPageViaRelationship()
- * @method static array<int, int> perPageOptions()
+ * @method static int                                              perPageViaRelationship()
+ * @method static array<int, int>                                  perPageOptions()
  * @method static array<int, class-string<\Laravel\Nova\Resource>> withRelated()
- * @method        \Laravel\Nova\Menu\Breadcrumbs breadcrumbs(\Laravel\Nova\Http\Requests\LensRequest $request)
+ * @method        \Laravel\Nova\Menu\Breadcrumbs                   breadcrumbs(\Laravel\Nova\Http\Requests\LensRequest $request)
  */
 trait BetterLens
 {
@@ -88,6 +89,16 @@ trait BetterLens
      * @return array<string,string>
      */
     public static function resourceLinkParameters($model, LensRequest $request)
+    {
+        return [];
+    }
+
+    /**
+     * Creation Url Extra Parameters.
+     *
+     * @return array<string,string>
+     */
+    public static function createLinkParameters(NovaRequest $request)
     {
         return [];
     }

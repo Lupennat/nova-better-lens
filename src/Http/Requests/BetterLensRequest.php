@@ -28,13 +28,15 @@ class BetterLensRequest extends LensRequest
             $lensResource = $this->lens()->setResource($model);
 
             return transform((new $resource($model))->serializeForIndex(
-                $this, $lensResource->resolveFields($this)
+                $this,
+                $lensResource->resolveFields($this)
             ), function ($payload) use ($model, $lensResource) {
                 $payload['resourceLinkParameters'] = method_exists($lensResource, 'resourceLinkParameters') ? $lensResource::resourceLinkParameters($model, $this) : [];
                 $payload['actions'] = collect(array_values($lensResource->actions($this)))
                     ->filter(function ($action) {
                         return $action->shownOnIndex() || $action->shownOnTableRow();
                     })
+                    ->filter->authorizedToSee($this)
                     ->filter->authorizedToRun($this, $model)
                     ->values();
 

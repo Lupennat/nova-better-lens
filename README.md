@@ -2,20 +2,20 @@
 2. [Installation](#Installation)
 3. [Usage](#Usage)
 4. [Trait Improvements](#trait-improvements)
-    1. [Authorization](#authorization)
-    2. [Hide From Toolbar](#hide-from-toolbar)
-    3. [With Related](#with-related)
-    4. [Per Page](#per-page)
-    5. [Decorate Collection](#decorate-collection)
-    6. [Resource Link Parameters](#resource-link-parameters)
-    7. [Breadcrumbs](#breadcrumbs)
+   1. [Authorization](#authorization)
+   2. [Hide From Toolbar](#hide-from-toolbar)
+   3. [With Related](#with-related)
+   4. [Per Page](#per-page)
+   5. [Decorate Collection](#decorate-collection)
+   6. [Resource Link Parameters](#resource-link-parameters)
+   7. [Breadcrumbs](#breadcrumbs)
 5. [Many Fields](#many-fields)
 6. [Lens Field](#lens-field)
 
 ## Requirements
 
--   `php: ^7.4 | ^8`
--   `laravel/nova: ^4`
+- `php: ^7.4 | ^8`
+- `laravel/nova: ^4`
 
 ## Installation
 
@@ -63,8 +63,6 @@ class MostValuableUsers extends Lens
 
 Better Lens provide the ability to define authorization for lens. You can override parent resource methods using standard laravel authorization methods.
 
-> By Default Nova Lens does not provide the ability to Create/Attach resource, to mantain compatibility `authorizedToCreate` will work only if lens will be loaded with many\* Fields.
-
 ```php
 
 use Lupennat\BetterLens\BetterLens;
@@ -79,6 +77,61 @@ class MostValuableUsers extends Lens
         return false;
     }
 }
+```
+
+#### Authorize To Create
+
+By Default Nova Lens does not provide the ability to Create/Attach resource, to mantain compatibility `authorizedToCreate` will work only if lens will be loaded with many\* Fields or if the method is explicitly defined in the lens.
+
+Four new static methods are available inside Lens, you can use these methods to personalize the relation parameters `viaResource`, `viaResourceId`, `viaRelationship` and `relationshipType` of creation url.
+
+```php
+
+use Lupennat\BetterLens\BetterLens;
+use Illuminate\Http\Request;
+
+class MostValuableUsers extends Lens
+{
+    use BetterLens;
+
+    public static function createViaResource(Request $request)
+    {
+        //
+    }
+
+    public static function createViaResourceId(Request $request)
+    {
+        //
+    }
+
+    public static function createViaRelationship(Request $request)
+    {
+        //
+    }
+
+    public static function createRelationshipType(Request $request)
+    {
+        //
+    }
+}
+```
+
+#### create Link Parameters
+
+Better Lens provide the ability to define extra parameters for creation url. You can define a list of `parameter => value` using static method `createLinkParameters` (by Default is empty array).
+
+```php
+    /**
+     * Creation Url Extra Parameters.
+     *
+     * @return array<string,string>
+     */
+    public static function createLinkParameters(NovaRequest $request)
+    {
+        return [
+            'param' => 'value'
+        ];
+    }
 ```
 
 ### Hide From Toolbar
@@ -265,10 +318,10 @@ Better Lens provide the ability to override default Breadcrumbs for Lens pages u
 
 Better Lens automatically enable a new method `lens` for all Many Relationship Fields:
 
--   HasMany
--   BelongsToMany
--   HasManyThrough
--   MorphToMany
+- HasMany
+- BelongsToMany
+- HasManyThrough
+- MorphToMany
 
 many relationship will load the lens view instead of the main resource.
 

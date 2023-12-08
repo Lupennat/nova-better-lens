@@ -80,8 +80,6 @@ class Lens extends Field implements ListableField, RelatableField
 
     /**
      * Determine if the field is to be shown on the detail view.
-     *
-     * @param mixed $resource
      */
     public function isShownOnDetail(NovaRequest $request, $resource): bool
     {
@@ -118,14 +116,14 @@ class Lens extends Field implements ListableField, RelatableField
     public function authorize(Request $request)
     {
         return call_user_func(
-            [$this->resourceClass, 'authorizedToViewAny'], $request
+            [$this->resourceClass, 'authorizedToViewAny'],
+            $request
         ) && parent::authorize($request);
     }
 
     /**
      * Resolve the field's value.
      *
-     * @param mixed       $resource
      * @param string|null $attribute
      *
      * @return void
@@ -168,16 +166,24 @@ class Lens extends Field implements ListableField, RelatableField
      */
     public function jsonSerialize(): array
     {
-        return array_merge(parent::jsonSerialize(), [
-            'collapsable' => $this->collapsable,
-            'collapsedByDefault' => $this->collapsedByDefault,
-            'relatable' => false,
-            'perPage' => method_exists($this->lensClass, 'perPageViaRelationship') ? $this->lensClass::perPageViaRelationship() : $this->resourceClass::$perPageViaRelationship,
-            'showPagination' => method_exists($this->lensClass, 'showPaginationViaRelationship') ? $this->lensClass::showPaginationViaRelationship() : false,
-            'resourceName' => $this->resourceName,
-            'singularLabel' => $this->singularLabel ?? $this->resourceClass::singularLabel(),
-            'lensName' => $this->lensName,
-            'searchable' => $this->lensClass::searchable(),
-        ]);
+        return with(app(NovaRequest::class), function ($request) {
+            return array_merge(parent::jsonSerialize(), [
+                'collapsable' => $this->collapsable,
+                'collapsedByDefault' => $this->collapsedByDefault,
+                'relatable' => false,
+                'createLinkParameters' => $this->lensClass::createLinkParameters($request),
+                'createViaResource' => method_exists($this->lensClass, 'createViaResource') ? $this->lensClass::createViaResource($request) : null,
+                'createViaResourceId' => method_exists($this->lensClass, 'createViaResourceId') ? $this->lensClass::createViaResourceId($request) : null,
+                'createViaRelationship' => method_exists($this->lensClass, 'createViaRelationship') ? $this->lensClass::createViaRelationship($request) : null,
+                'createRelationshipType' => method_exists($this->lensClass, 'createRelationshipType') ? $this->lensClass::createRelationshipType($request) : null,
+                'isAuthorizedToCreate' => method_exists($this->lensClass, 'authorizedToCreate') ? $this->lensClass::authorizedToCreate($request) : false,
+                'perPage' => method_exists($this->lensClass, 'perPageViaRelationship') ? $this->lensClass::perPageViaRelationship() : $this->resourceClass::$perPageViaRelationship,
+                'showPagination' => method_exists($this->lensClass, 'showPaginationViaRelationship') ? $this->lensClass::showPaginationViaRelationship() : false,
+                'resourceName' => $this->resourceName,
+                'singularLabel' => $this->singularLabel ?? $this->resourceClass::singularLabel(),
+                'lensName' => $this->lensName,
+                'searchable' => $this->lensClass::searchable(),
+            ]);
+        });
     }
 }

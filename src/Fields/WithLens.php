@@ -39,8 +39,6 @@ trait WithLens
 
     /**
      * Determine if the field is to be shown on the detail view.
-     *
-     * @param mixed $resource
      */
     public function isShownOnDetail(NovaRequest $request, $resource): bool
     {
@@ -62,6 +60,11 @@ trait WithLens
             return array_merge(parent::jsonSerialize(), [
                 'lensName' => $this->lensName,
                 'searchable' => $this->lensClass::searchable(),
+                'createLinkParameters' => $this->lensClass::createLinkParameters($request),
+                'createViaResource' => method_exists($this->lensClass, 'createViaResource') ? $this->lensClass::createViaResource($request) : null,
+                'createViaResourceId' => method_exists($this->lensClass, 'createViaResourceId') ? $this->lensClass::createViaResourceId($request) : null,
+                'createViaRelationship' => method_exists($this->lensClass, 'createViaRelationship') ? $this->lensClass::createViaRelationship($request) : null,
+                'createRelationshipType' => method_exists($this->lensClass, 'createRelationshipType') ? $this->lensClass::createRelationshipType($request) : null,
                 'isAuthorizedToCreate' => method_exists($this->lensClass, 'authorizedToCreate') ? $this->lensClass::authorizedToCreate($request) : $this->resourceClass::authorizedToCreate($request),
                 'perPage' => method_exists($this->lensClass, 'perPageViaRelationship') ? $this->lensClass::perPageViaRelationship() : $this->resourceClass::$perPageViaRelationship,
                 'showPagination' => method_exists($this->lensClass, 'showPaginationViaRelationship') ? $this->lensClass::showPaginationViaRelationship() : false,
