@@ -4,7 +4,7 @@
     :lens="lens"
     :searchable="searchable"
     :shouldOverrideMeta="true"
-    :is-authorized-to-create="false"
+    :is-authorized-to-create="isAuthorizedToCreate"
     :via-resource="viaResource"
     :via-resource-id="viaResourceId"
   />

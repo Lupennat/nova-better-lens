@@ -29,6 +29,7 @@ class BetterLensController extends Controller
             'searchable' => $lens::searchable(),
             'viaResource' => $request->viaResource,
             'viaResourceId' => $request->viaResourceId,
+            'isAuthorizedToCreate' => method_exists($lens, 'authorizedToCreate') ? $lens::authorizedToCreate($request) : false,
         ]);
     }
 
