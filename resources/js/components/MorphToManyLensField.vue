@@ -5,12 +5,6 @@
     :via-resource="resourceName"
     :via-resource-id="resourceId"
     :via-relationship="field.morphToManyRelationship"
-    :create-via-resource="field.createViaResource || resourceName"
-    :create-via-resource-id="field.createViaResourceId || resourceId"
-    :create-via-relationship="
-      field.createViaRelationship || field.belongsToManyRelationship
-    "
-    :create-relationship-type="field.createRelationshipType || 'morphToMany'"
     :create-link-parameters="field.createLinkParameters"
     relationship-type="morphToMany"
     @actionExecuted="actionExecuted"

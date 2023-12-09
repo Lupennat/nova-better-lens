@@ -5,12 +5,6 @@
     :via-resource="resourceName"
     :via-resource-id="resourceId"
     :via-relationship="field.hasManyThroughRelationship"
-    :create-via-resource="field.createViaResource || resourceName"
-    :create-via-resource-id="field.createViaResourceId || resourceId"
-    :create-via-relationship="
-      field.createViaRelationship || field.belongsToManyRelationship
-    "
-    :create-relationship-type="field.createRelationshipType || 'hasManyThrough'"
     :create-link-parameters="field.createLinkParameters"
     relationship-type="hasManyThrough"
     @actionExecuted="actionExecuted"

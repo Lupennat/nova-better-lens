@@ -8,7 +8,8 @@
    4. [Per Page](#per-page)
    5. [Decorate Collection](#decorate-collection)
    6. [Resource Link Parameters](#resource-link-parameters)
-   7. [Breadcrumbs](#breadcrumbs)
+   7. [Create Link Parameters](#create-link-parameters)
+   8. [Breadcrumbs](#breadcrumbs)
 5. [Many Fields](#many-fields)
 6. [Lens Field](#lens-field)
 
@@ -82,57 +83,6 @@ class MostValuableUsers extends Lens
 #### Authorize To Create
 
 By Default Nova Lens does not provide the ability to Create/Attach resource, to mantain compatibility `authorizedToCreate` will work only if lens will be loaded with many\* Fields or if the method is explicitly defined in the lens.
-
-Four new static methods are available inside Lens, you can use these methods to personalize the relation parameters `viaResource`, `viaResourceId`, `viaRelationship` and `relationshipType` of creation url.
-
-```php
-
-use Lupennat\BetterLens\BetterLens;
-use Illuminate\Http\Request;
-
-class MostValuableUsers extends Lens
-{
-    use BetterLens;
-
-    public static function createViaResource(Request $request)
-    {
-        //
-    }
-
-    public static function createViaResourceId(Request $request)
-    {
-        //
-    }
-
-    public static function createViaRelationship(Request $request)
-    {
-        //
-    }
-
-    public static function createRelationshipType(Request $request)
-    {
-        //
-    }
-}
-```
-
-#### create Link Parameters
-
-Better Lens provide the ability to define extra parameters for creation url. You can define a list of `parameter => value` using static method `createLinkParameters` (by Default is empty array).
-
-```php
-    /**
-     * Creation Url Extra Parameters.
-     *
-     * @return array<string,string>
-     */
-    public static function createLinkParameters(NovaRequest $request)
-    {
-        return [
-            'param' => 'value'
-        ];
-    }
-```
 
 ### Hide From Toolbar
 
@@ -294,6 +244,24 @@ Better Lens provide the ability to define extra parameters for view and edit url
     {
         return [
             'name' => $model->name
+        ];
+    }
+```
+
+### Create Link Parameters
+
+Better Lens provide the ability to define extra parameters for creation url. You can define a list of `parameter => value` using static method `createLinkParameters` (by Default is empty array).
+
+```php
+    /**
+     * Creation Url Extra Parameters.
+     *
+     * @return array<string,string>
+     */
+    public static function createLinkParameters(NovaRequest $request)
+    {
+        return [
+            'param' => 'value'
         ];
     }
 ```

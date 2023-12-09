@@ -42,17 +42,17 @@
           <!-- Create / Attach Button -->
           <CreateResourceButton
             :label="createButtonLabel"
-            :link-parameters="createLinkParameters"
+            :link-parameters="createParameters"
             :singular-name="singularName"
             :resource-name="resourceName"
-            :via-resource="createViaResource"
-            :via-resource-id="createViaResourceId"
-            :via-relationship="createViaRelationship"
-            :relationship-type="createRelationshipType"
+            :via-resource="viaResource"
+            :via-resource-id="viaResourceId"
+            :via-relationship="viaRelationship"
+            :relationship-type="relationshipType"
             :authorized-to-create="authorizedToCreate && !resourceIsFull"
             :authorized-to-relate="authorizedToRelate"
             class="flex-shrink-0 ml-auto"
-            :class="{ 'mb-6': createViaResource }"
+            :class="{ 'mb-6': viaResource }"
           />
         </div>
       </div>
@@ -140,11 +140,11 @@
               :create-button-label="createButtonLabel"
               :singular-name="singularName"
               :resource-name="resourceName"
-              :link-parameters="createLinkParameters"
-              :via-resource="createViaResource"
-              :via-resource-id="createViaResourceId"
-              :via-relationship="createViaRelationship"
-              :relationship-type="createRelationshipType"
+              :link-parameters="createParameters"
+              :via-resource="viaResource"
+              :via-resource-id="viaResourceId"
+              :via-relationship="viaRelationship"
+              :relationship-type="relationshipType"
               :authorized-to-create="authorizedToCreate && !resourceIsFull"
               :authorized-to-relate="authorizedToRelate"
             />
@@ -264,22 +264,6 @@ export default {
     showPagination: {
       type: Boolean,
       default: false,
-    },
-    createViaResource: {
-      type: String,
-      required: true,
-    },
-    createViaResourceId: {
-      type: [Number, String],
-      required: true,
-    },
-    createViaRelationship: {
-      type: String,
-      required: true,
-    },
-    createRelationshipType: {
-      type: String,
-      required: true,
     },
     createLinkParameters: {
       required: true,
@@ -428,19 +412,9 @@ export default {
       }
 
       return Nova.request()
-        .get(
-          "/nova-api/" +
-            this.resourceName +
-            "/relate-authorization" +
-            "?viaResource=" +
-            this.createViaResource +
-            "&viaResourceId=" +
-            this.createViaResourceId +
-            "&viaRelationship=" +
-            this.createViaRelationship +
-            "&relationshipType=" +
-            this.createRelationshipType,
-        )
+        .get("/nova-api/" + this.resourceName + "/relate-authorization", {
+          params: this.authorizeToRelateQueryString,
+        })
         .then((response) => {
           this.authorizedToRelate = response.data.authorized;
         });
@@ -553,6 +527,26 @@ export default {
   },
 
   computed: {
+    createParameters() {
+      return this.createLinkParameters &&
+        typeof this.createLinkParameters === "object" &&
+        !Array.isArray(this.createLinkParameters)
+        ? this.createLinkParameters
+        : {};
+    },
+
+    authorizeToRelateQueryString() {
+      return Object.assign(
+        {
+          viaResource: this.viaResource,
+          viaResourceId: this.viaResourceId,
+          viaRelationship: this.viaRelationship,
+          relationshipType: this.relationshipType,
+        },
+        this.createParameters,
+      );
+    },
+
     actionQueryString() {
       return {
         currentSearch: this.currentSearch,
