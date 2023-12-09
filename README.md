@@ -2,26 +2,26 @@
 2. [Installation](#Installation)
 3. [Usage](#Usage)
 4. [Trait Improvements](#trait-improvements)
-   1. [Authorization](#authorization)
-   2. [Hide From Toolbar](#hide-from-toolbar)
-   3. [With Related](#with-related)
-   4. [Per Page](#per-page)
-   5. [Decorate Collection](#decorate-collection)
-   6. [Resource Link Parameters](#resource-link-parameters)
-   7. [Create Link Parameters](#create-link-parameters)
-   8. [Breadcrumbs](#breadcrumbs)
+    1. [Authorization](#authorization)
+    2. [Hide From Toolbar](#hide-from-toolbar)
+    3. [With Related](#with-related)
+    4. [Per Page](#per-page)
+    5. [Decorate Collection](#decorate-collection)
+    6. [Resource Link Parameters](#resource-link-parameters)
+    7. [Create Link Parameters](#create-link-parameters)
+    8. [Breadcrumbs](#breadcrumbs)
 5. [Many Fields](#many-fields)
 6. [Lens Field](#lens-field)
 
 ## Requirements
 
-- `php: ^7.4 | ^8`
-- `laravel/nova: ^4`
+-   `php: ^7.4 | ^8`
+-   `laravel/nova: ^4`
 
 ## Installation
 
 ```
-composer require lupennat/nova-better-lens
+composer require lupennat/nova-better-lens:^1.0
 ```
 
 ## Usage
@@ -286,10 +286,12 @@ Better Lens provide the ability to override default Breadcrumbs for Lens pages u
 
 Better Lens automatically enable a new method `lens` for all Many Relationship Fields:
 
-- HasMany
-- BelongsToMany
-- HasManyThrough
-- MorphToMany
+-   BelongsToMany
+-   HasMany
+-   HasManyThrough
+-   MorphedByMany
+-   MorphMany
+-   MorphToMany
 
 many relationship will load the lens view instead of the main resource.
 

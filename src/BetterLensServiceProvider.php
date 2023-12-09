@@ -10,11 +10,15 @@ use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\HasManyThrough;
+use Laravel\Nova\Fields\MorphedByMany;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Nova;
 use Lupennat\BetterLens\Fields\BelongsToManyLens;
 use Lupennat\BetterLens\Fields\HasManyLens;
 use Lupennat\BetterLens\Fields\HasManyThroughLens;
+use Lupennat\BetterLens\Fields\MorphedByManyLens;
+use Lupennat\BetterLens\Fields\MorphManyLens;
 use Lupennat\BetterLens\Fields\MorphToManyLens;
 
 class BetterLensServiceProvider extends ServiceProvider
@@ -36,17 +40,38 @@ class BetterLensServiceProvider extends ServiceProvider
 
         Field::macro('lens', function ($lens) {
             $field = $this;
-            if ($this instanceof HasMany) {
-                $field = HasManyLens::make($lens, $this->name, $this->attribute, $this->resourceClass);
-            } elseif ($this instanceof BelongsToMany) {
+
+            if ($this instanceof BelongsToMany) {
                 $field = BelongsToManyLens::make($lens, $this->name, $this->attribute, $this->resourceClass);
-            } elseif ($this instanceof HasManyThrough) {
-                $field = HasManyThroughLens::make($lens, $this->name, $this->attribute, $this->resourceClass);
-            } elseif ($this instanceof MorphToMany) {
-                $field = MorphToManyLens::make($lens, $this->name, $this->attribute, $this->resourceClass);
+                return $field;
             }
 
+            if ($this instanceof HasManyThrough) {
+                $field = HasManyThroughLens::make($lens, $this->name, $this->attribute, $this->resourceClass);
+                return $field;
+            }
+
+            if ($this instanceof MorphToMany) {
+                $field = MorphToManyLens::make($lens, $this->name, $this->attribute, $this->resourceClass);
+                return $field;
+            }
+
+            if ($this instanceof MorphedByMany) {
+                $field = MorphedByManyLens::make($lens, $this->name, $this->attribute, $this->resourceClass);
+                return $field;
+            }
+
+            if ($this instanceof MorphMany) {
+                $field = MorphManyLens::make($lens, $this->name, $this->attribute, $this->resourceClass);
+                return $field;
+            }
+
+            if ($this instanceof HasMany) {
+                $field = HasManyLens::make($lens, $this->name, $this->attribute, $this->resourceClass);
+                return $field;
+            }
             return $field;
+
         });
     }
 
