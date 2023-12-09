@@ -361,7 +361,7 @@
                 }
 
                 Nova.request()
-                    .get(`/nova-api/${this.resourceName}/lens/${this.lens}/actions`, {
+                    .get('/nova-vendor/better-lens/' + this.resourceName + '/lens/' + this.lens, {
                         params: {
                             viaResource: this.viaResource,
                             viaResourceId: this.viaResourceId,
