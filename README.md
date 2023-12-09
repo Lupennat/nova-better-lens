@@ -21,8 +21,13 @@
 ## Installation
 
 ```
-composer require lupennat/nova-better-lens
+composer require lupennat/nova-better-lens:^2.0
 ```
+
+| NOVA    | PACKAGE |
+| ------- | ------- |
+| <4.29.5 | 1.x     |
+| >4.29.6 | 2.x     |
 
 ## Usage
 
