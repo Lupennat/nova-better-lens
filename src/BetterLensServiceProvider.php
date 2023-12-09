@@ -17,6 +17,7 @@ use Laravel\Nova\Nova;
 use Lupennat\BetterLens\Fields\BelongsToManyLens;
 use Lupennat\BetterLens\Fields\HasManyLens;
 use Lupennat\BetterLens\Fields\HasManyThroughLens;
+use Lupennat\BetterLens\Fields\MorphedByManyLens;
 use Lupennat\BetterLens\Fields\MorphManyLens;
 use Lupennat\BetterLens\Fields\MorphToManyLens;
 
@@ -56,7 +57,7 @@ class BetterLensServiceProvider extends ServiceProvider
             }
 
             if ($this instanceof MorphedByMany) {
-                $field = MorphToManyLens::make($lens, $this->name, $this->attribute, $this->resourceClass);
+                $field = MorphedByManyLens::make($lens, $this->name, $this->attribute, $this->resourceClass);
                 return $field;
             }
 
