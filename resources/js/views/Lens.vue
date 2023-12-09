@@ -198,6 +198,7 @@
         Deletable,
         Collapsable,
         IndexConcerns,
+        InteractsWithQueryString,
         InteractsWithResourceInformation,
         SupportsPolling,
     } from '@/mixins';
@@ -220,6 +221,7 @@
             Paginatable,
             PerPageable,
             IndexConcerns,
+            InteractsWithQueryString,
             InteractsWithResourceInformation,
             SupportsPolling,
         ],
@@ -313,7 +315,7 @@
                     this.clearResourceSelections();
 
                     return minimum(
-                        Nova.request().get('/nova-vendor/better-lens/' + this.resourceName + '/lens/' + this.lens, {
+                        Nova.request().get('/nova-api/' + this.resourceName + '/lens/' + this.lens, {
                             params: this.resourceRequestQueryString,
                             cancelToken: new CancelToken(canceller => {
                                 this.canceller = canceller;
@@ -478,30 +480,6 @@
                 } else {
                     this.loading = false;
                 }
-            },
-
-            /**
-             * Update the given query string values.
-             */
-            updateQueryString(value) {
-                let searchParams = new URLSearchParams(window.location.search);
-                let page = this.$inertia.page;
-
-                _.forEach(value, (v, i) => {
-                    searchParams.set(i, v || '');
-                });
-
-                if (compiledSearchParams !== searchParams.toString()) {
-                    if (page.url !== `${window.location.pathname}?${searchParams}`) {
-                        page.url = `${window.location.pathname}?${searchParams}`;
-
-                        window.history.pushState(page, '', `${window.location.pathname}?${searchParams}`);
-                    }
-
-                    compiledSearchParams = searchParams.toString();
-                }
-
-                Nova.$emit('query-string-changed', searchParams);
             },
         },
 

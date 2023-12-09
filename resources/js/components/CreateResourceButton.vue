@@ -32,6 +32,7 @@
     import CreateResourceButton from '@/components/CreateResourceButton';
 
     export default {
+        name: 'CreateResourceButton',
         extends: CreateResourceButton,
         props: {
             linkParameters: {
@@ -39,6 +40,20 @@
             },
         },
         computed: {
+            shouldShowAttachButton() {
+                return (
+                    (this.relationshipType === 'belongsToMany' || this.relationshipType === 'morphToMany') &&
+                    this.authorizedToRelate
+                );
+            },
+
+            shouldShowCreateButton() {
+                return this.authorizedToCreate && this.authorizedToRelate && !this.alreadyFilled;
+            },
+
+            shouldShowButtons() {
+                return this.shouldShowAttachButton || this.shouldShowCreateButton;
+            },
             attachUrl() {
                 return this.$url(
                     `/resources/${this.viaResource}/${this.viaResourceId}/attach/${this.resourceName}`,
