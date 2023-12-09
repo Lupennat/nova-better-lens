@@ -30,6 +30,7 @@ class BetterLensController extends Controller
             'viaResource' => $request->viaResource,
             'viaResourceId' => $request->viaResourceId,
             'isAuthorizedToCreate' => method_exists($lens, 'authorizedToCreate') ? $lens::authorizedToCreate($request) : false,
+            'createLinkParameters' => $lens::createLinkParameters($request),
         ]);
     }
 

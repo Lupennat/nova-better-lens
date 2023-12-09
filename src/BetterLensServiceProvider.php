@@ -89,7 +89,7 @@ class BetterLensServiceProvider extends ServiceProvider
             ->prefix('nova-vendor/better-lens')
             ->group(__DIR__ . '/../routes/api.php');
 
-        Route::namespace('Lupennat\BetterLens\Http\Controllers')
+        Route::namespace('Laravel\Nova\Http\Controllers')
             ->domain(config('nova.domain', null))
             ->middleware(config('nova.api_middleware', []))
             ->prefix(Nova::path())
