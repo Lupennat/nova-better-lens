@@ -315,7 +315,7 @@
                     this.clearResourceSelections();
 
                     return minimum(
-                        Nova.request().get('/nova-api/' + this.resourceName + '/lens/' + this.lens, {
+                        Nova.request().get('/nova-vendor/better-lens/' + this.resourceName + '/lens/' + this.lens, {
                             params: this.resourceRequestQueryString,
                             cancelToken: new CancelToken(canceller => {
                                 this.canceller = canceller;
