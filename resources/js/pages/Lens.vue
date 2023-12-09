@@ -27,6 +27,11 @@ export default {
       default: false,
     },
 
+    isAuthorizedToCreate: {
+      type: Boolean,
+      default: false,
+    },
+
     ...mapProps(["resourceName", "viaResource", "viaResourceId"]),
   },
 };
