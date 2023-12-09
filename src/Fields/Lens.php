@@ -172,6 +172,7 @@ class Lens extends Field implements ListableField, RelatableField
                 'collapsedByDefault' => $this->collapsedByDefault,
                 'relatable' => false,
                 'isAuthorizedToCreate' => method_exists($this->lensClass, 'authorizedToCreate') ? $this->lensClass::authorizedToCreate($request) : false,
+                'createLinkParameters' => $this->lensClass::createLinkParameters($request),
                 'perPage' => method_exists($this->lensClass, 'perPageViaRelationship') ? $this->lensClass::perPageViaRelationship() : $this->resourceClass::$perPageViaRelationship,
                 'showPagination' => method_exists($this->lensClass, 'showPaginationViaRelationship') ? $this->lensClass::showPaginationViaRelationship() : false,
                 'resourceName' => $this->resourceName,

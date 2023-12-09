@@ -61,6 +61,7 @@ trait WithLens
                 'lensName' => $this->lensName,
                 'searchable' => $this->lensClass::searchable(),
                 'isAuthorizedToCreate' => method_exists($this->lensClass, 'authorizedToCreate') ? $this->lensClass::authorizedToCreate($request) : $this->resourceClass::authorizedToCreate($request),
+                'createLinkParameters' => $this->lensClass::createLinkParameters($request),
                 'perPage' => method_exists($this->lensClass, 'perPageViaRelationship') ? $this->lensClass::perPageViaRelationship() : $this->resourceClass::$perPageViaRelationship,
                 'showPagination' => method_exists($this->lensClass, 'showPaginationViaRelationship') ? $this->lensClass::showPaginationViaRelationship() : false,
             ]);
