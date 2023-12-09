@@ -31,7 +31,7 @@
     <template v-if="!shouldBeCollapsed">
       <div class="flex">
         <IndexSearchInput
-          :class="{ 'mb-6': !viaResource }"
+          class="mb-6"
           v-if="searchable"
           :searchable="searchable"
           v-model:keyword="search"
