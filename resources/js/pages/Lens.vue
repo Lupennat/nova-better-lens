@@ -5,6 +5,7 @@
         :searchable="searchable"
         :shouldOverrideMeta="true"
         :is-authorized-to-create="isAuthorizedToCreate"
+        :create-link-parameters="createLinkParameters"
         :via-resource="viaResource"
         :via-resource-id="viaResourceId"
     />
@@ -30,6 +31,12 @@
             isAuthorizedToCreate: {
                 type: Boolean,
                 default: false,
+            },
+
+            createLinkParameters: {
+                default() {
+                    return {};
+                },
             },
 
             ...mapProps(['resourceName', 'viaResource', 'viaResourceId']),
