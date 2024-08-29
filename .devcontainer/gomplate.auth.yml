@@ -1,0 +1,9 @@
+in: |
+  {
+    "http-basic": {
+      "nova.laravel.com": {
+        "username": "{{ getenv "NOVA_USERNAME" }}",
+        "password": "{{ getenv "NOVA_PASSWORD" }}"
+      }
+    }
+  }

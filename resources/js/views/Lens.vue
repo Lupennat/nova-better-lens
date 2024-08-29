@@ -350,6 +350,7 @@
                             relationshipType: this.relationshipType,
                             display: 'index',
                             resources: this.selectedResourcesForActionSelector,
+                            filters: this.selectAllMatchingChecked ? this.encodedFilters : null,
                         },
                         cancelToken: new CancelToken(canceller => {
                             this.actionCanceller = canceller;
