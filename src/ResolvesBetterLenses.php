@@ -2,6 +2,7 @@
 
 namespace Lupennat\BetterLens;
 
+use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 trait ResolvesBetterLenses
@@ -11,7 +12,7 @@ trait ResolvesBetterLenses
      *
      * @return \Illuminate\Support\Collection<int, \Laravel\Nova\Lenses\Lens>
      */
-    public function resolveLenses(NovaRequest $request)
+    public function resolveLenses(NovaRequest $request): Collection
     {
         $lenses = parent::resolveLenses($request);
 

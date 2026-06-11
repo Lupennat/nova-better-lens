@@ -2,12 +2,12 @@
 
 namespace Lupennat\BetterLens\Http\Resources;
 
+use Laravel\Nova\Lenses\Lens;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Http\Resources\LensViewResource;
-use Laravel\Nova\Query\ApplySoftDeleteConstraint;
 
 class BetterLensViewResource extends LensViewResource
 {
@@ -18,14 +18,14 @@ class BetterLensViewResource extends LensViewResource
      *
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         $lens = $this->authorizedLensForRequest($request);
 
         $query = $request->newSearchQuery();
 
         if ($request->resourceSoftDeletes()) {
-            (new ApplySoftDeleteConstraint())->__invoke($query, $request->trashed);
+            $query->withTrashed();
         }
 
         $paginator = $lens->query($request, $query);
@@ -56,7 +56,7 @@ class BetterLensViewResource extends LensViewResource
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function authorizedLensForRequest(LensRequest $request)
+    public function authorizedLensForRequest(LensRequest $request): Lens
     {
         return $request->lens();
     }

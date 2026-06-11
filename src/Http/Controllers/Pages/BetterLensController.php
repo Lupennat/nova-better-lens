@@ -4,6 +4,7 @@ namespace Lupennat\BetterLens\Http\Controllers\Pages;
 
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
+use Inertia\Response as ResponseAlias;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Menu\Breadcrumb;
 use Laravel\Nova\Menu\Breadcrumbs;
@@ -16,9 +17,11 @@ class BetterLensController extends Controller
     /**
      * Show Resource Lens page using Inertia.
      *
-     * @return \Inertia\Response
+     * @param  \Lupennat\BetterLens\Http\Requests\BetterLensRequest  $request
+     *
+     * @return ResponseAlias
      */
-    public function __invoke(BetterLensRequest $request)
+    public function __invoke(BetterLensRequest $request): ResponseAlias
     {
         $lens = BetterLensViewResource::make()->authorizedLensForRequest($request);
 
